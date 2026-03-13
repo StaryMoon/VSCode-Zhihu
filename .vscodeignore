@@ -9,7 +9,7 @@ tmp_test
 collection.json
 .vscode
 qrcode.png
-image.png 
+image.png
 *.vsix
 package.cmd
 out/test/**
@@ -19,3 +19,6 @@ tsconfig.json
 tslint.json
 release_notes/images
 **/*.pdf
+.idea
+.idea/**
+**/.idea/**

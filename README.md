@@ -1,6 +1,4 @@
-[![](https://vsmarketplacebadge.apphb.com/version-short/niudai.vscode-zhihu.svg)](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
-[![](https://vsmarketplacebadge.apphb.com/downloads-short/niudai.vscode-zhihu.svg)](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
-[![](https://vsmarketplacebadge.apphb.com/rating-short/niudai.vscode-zhihu.svg)](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
+[VS Marketplace](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
 
 
 <p align="center">
@@ -348,3 +346,13 @@ $$
 |Zhihu: Is Title Image Full Screen    | 打勾开让文章背景图片变成全屏    |
 | zhihu.enableMermaidToPng | 启动mermaid图片上传至知乎 |
 | zhihu.mermaidTheme | 设置mermaid的主题，`dark`和`default`  |
+
+
+## 鸣谢
+
+感谢以下项目，帮助我完成这个项目升级：
+
+- [niudai/VSCode-Zhihu](https://github.com/niudai/VSCode-Zhihu)
+- [crispyChicken999/zhihu-fisher-vscode](https://github.com/crispyChicken999/zhihu-fisher-vscode)
+- [zly2006/zhihu-plus-plus](https://github.com/zly2006/zhihu-plus-plus)
+- [BAIGUANGMEI/zhihu-cli](https://github.com/BAIGUANGMEI/zhihu-cli)

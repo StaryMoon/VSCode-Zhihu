@@ -6,6 +6,7 @@ import {
     getCookieJar,
     getCookieStore,
     clearCookieStore,
+    getRawCookieHeader,
 } from "../global/cookie";
 import { Output } from "../global/logger";
 import { IProfile } from "../model/target/target";
@@ -23,24 +24,31 @@ export class HttpService {
     constructor() {}
 
     public async sendRequest(options): Promise<any> {
-        if (options.headers == undefined) {
-            options.headers = DefaultHTTPHeader;
-            try {
-                options.headers["cookie"] = getCookieJar().getCookieStringSync(
-                    options.uri
-                );
-            } catch (error) {
-                console.log(error);
-            }
+        if (options.header && options.headers == undefined) {
+            options.headers = options.header;
+        }
+        options.headers = options.headers
+            ? { ...options.headers }
+            : { ...DefaultHTTPHeader };
+        try {
+            options.headers["cookie"] = options.useRawCookieHeader
+                ? getRawCookieHeader()
+                : getCookieJar().getCookieStringSync(options.uri);
+        } catch (error) {
+            console.log(error);
         }
         if (this.xsrfToken) {
             options.headers["x-xsrftoken"] = this.xsrfToken;
         }
-        options.headers["cookie"] = getCookieJar().getCookieStringSync(
-            options.uri
-        );
+        try {
+            options.headers["cookie"] = options.useRawCookieHeader
+                ? getRawCookieHeader()
+                : getCookieJar().getCookieStringSync(options.uri);
+        } catch (error) {
+            console.log(error);
+        }
 		// TODO 暂时删除导致json乱码的压缩方式
-        if (!options.isGzip) {
+        if (!(options.isGzip || options.gzip)) {
             delete options.headers["accept-encoding"];
         }
         // options.headers['cookie'] = getCookieJar().getCookieStringSync('www.zhihu.com');
@@ -118,6 +126,6 @@ export class HttpService {
 
 var httpService = new HttpService();
 
-export const sendRequest = httpService.sendRequest;
-export const clearCookie = httpService.clearCookie;
-export const clearCache = httpService.clearCache;
+export const sendRequest = httpService.sendRequest.bind(httpService);
+export const clearCookie = httpService.clearCookie.bind(httpService);
+export const clearCache = httpService.clearCache.bind(httpService);

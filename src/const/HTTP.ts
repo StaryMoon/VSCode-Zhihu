@@ -1,20 +1,25 @@
 export const DefaultHTTPHeader = {
 	'accept-encoding': 'gzip',
-	// 'Host': 'www.zhihu.com',
-	// 'Referer': 'https://www.zhihu.com/',
+	'Accept': 'application/json, text/plain, */*',
+	'Accept-Language': 'en-US,en;q=0.9',
 	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-		'(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+		'(KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+	'sec-ch-ua': '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+	'sec-ch-ua-mobile': '?0',
+	'sec-ch-ua-platform': '"Windows"',
 	'content-type': 'application/x-www-form-urlencoded',
-	// 'x-zse-83': '3_1.1',
-	// 'x-xsrftoken': 'dCyt1Kb97IN7jeh5SJo92A9mw2bvv9Es',
 }
 
 export const LoginPostHeader = {
 	'x-zse-83': '3_2.0',
-	'x-xsrftoken': 'HXVUoGikKN8nor8BW9AZEdJAVayIRWSl',
+	'Accept': 'application/json, text/plain, */*',
+	'Accept-Language': 'en-US,en;q=0.9',
 	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-	'(KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',		
-	'accept-encoding': 'gzip',	
+		'(KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+	'accept-encoding': 'gzip',
+	'sec-ch-ua': '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+	'sec-ch-ua-mobile': '?0',
+	'sec-ch-ua-platform': '"Windows"',
 	'content-type': 'application/x-www-form-urlencoded'
 }
 

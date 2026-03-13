@@ -22,7 +22,7 @@ import { WebviewService } from "./service/webview.service";
 import { CollectionItem, CollectionTreeviewProvider } from "./treeview/collection-treeview-provider";
 import { EventTreeItem, FeedTreeItem, FeedTreeViewProvider } from "./treeview/feed-treeview-provider";
 import { HotStoryTreeViewProvider } from "./treeview/hotstory-treeview-provider";
-import { setContext } from "./global/globa-var";
+import { getStorageFilePath, setContext } from "./global/globa-var";
 import { Output } from "./global/logger";
 import * as CacheManager from "./global/cache"
 import { ZhihuCompletionProvider, AtPeople } from "./lang/completion-provider";
@@ -30,10 +30,27 @@ import { mermaiSupport } from "./util/mermai-support";
 
 export async function activate(context: vscode.ExtensionContext) {
 	Output('Extension Activated')
-	if(!fs.existsSync(path.join(context.extensionPath, './cookie.json'))) {
-		fs.createWriteStream(path.join(context.extensionPath, './cookie.json')).end()
-	}
 	setContext(context);
+	const cookiePath = getStorageFilePath('cookie.json');
+	const legacyCookiePath = path.join(context.extensionPath, './cookie.json');
+	if(!fs.existsSync(cookiePath)) {
+		if (fs.existsSync(legacyCookiePath)) {
+			fs.copyFileSync(legacyCookiePath, cookiePath);
+		} else {
+			fs.writeFileSync(cookiePath, '{}')
+		}
+	} else {
+		try {
+			const cookieContent = fs.readFileSync(cookiePath, 'utf8').trim();
+			if (!cookieContent) {
+				fs.writeFileSync(cookiePath, '{}')
+			} else {
+				JSON.parse(cookieContent);
+			}
+		} catch (error) {
+			fs.writeFileSync(cookiePath, '{}')
+		}
+	}
 	// Dependency Injection
 	showReleaseNote()
 	const zhihuMdParser = new MarkdownIt({ html: true }).use(markdown_it_zhihu);
@@ -128,8 +145,8 @@ export async function activate(context: vscode.ExtensionContext) {
 
 	vscode.commands.registerCommand(
 		"zhihu.deleteCollectionItem",
-		(node: CollectionItem) => {
-			collectionService.deleteCollectionItem(node.item);
+		async (node: CollectionItem) => {
+			await collectionService.deleteCollectionItem(node.item);
 			collectionTreeViewProvider.refresh(node.parent);
 			vscode.window.showInformationMessage('已从收藏夹移除');
 		}

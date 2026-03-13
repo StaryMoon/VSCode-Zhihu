@@ -3,21 +3,26 @@ html
   head
     include css.pug
   body
-    div(class = 'header')
+    div(class='header')
       include header.pug
-    div(class = 'container')
+    div(class='container')
       each answer in answers
-        div 
-          div(class = 'author') 
-            span(class = 'avatar-span')
-              a(href = `https://www.zhihu.com/people/${answer.author.url_token}`)
-                img(class = 'avatar-img', src = `${answer.author.avatar_url}`)
-            div(class = 'profile')
-              div(class = 'author-name') #{answer.author.name}
-              div(class = 'author-headline') #{answer.author.headline}
-          div(class = 'content') !{answer.content}
-          div(class = 'voteup') 
-            button(class='voteup-btn', onclick=`answerUpvote(${answer.id})`) <svg class="Zi Zi--TriangleUp VoteButton-TriangleUp" fill="currentColor" viewBox="0 0 24 24" width="10" height="10"><path d="M2 18.242c0-.326.088-.532.237-.896l7.98-13.203C10.572 3.57 11.086 3 12 3c.915 0 1.429.571 1.784 1.143l7.98 13.203c.15.364.236.57.236.896 0 1.386-.875 1.9-1.955 1.9H3.955c-1.08 0-1.955-.517-1.955-1.9z" fill-rule="evenodd"></path></svg> #{answer.voteup_count}
+        div(class='answer-block')
+          div(class='author')
+            span(class='avatar-span')
+              a(href=`https://www.zhihu.com/people/${answer.author.url_token}`)
+                img(class='avatar-img', src=`${answer.author.avatar_url}`)
+            div(class='profile')
+              div(class='author-name') #{answer.author.name}
+              div(class='author-headline') #{answer.author.headline}
+          div(class='content') !{answer.content}
+          div(class='actions')
+            span(class='voteup-group')
+              button(class='voteup-btn', type='button', onclick=`answerUpvote(${answer.id})`) ▲ 赞同 #{answer.voteup_count || 0}
+              button(class='voteup-more-btn', type='button') ▼
+            button(class='action-btn', type='button') 反对
+            button(class='action-btn', type='button') 评论 #{answer.comment_count || 0}
+            button(class='action-btn', type='button', data-command='collect', data-item-id=`${answer.id}`, data-item-type='answer') 收藏 #{answer.favlists_count || 0}
+            button(class='action-btn', type='button', data-command='share') 分享
     script
       include js/global.js
-

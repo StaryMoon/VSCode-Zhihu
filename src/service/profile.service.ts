@@ -24,7 +24,7 @@ export class ProfileService {
 
     get name(): string {
         // this.fetchProfile();
-        return this.profile ? this.profile.name : undefined;
+        return this.profile ? this.profile.name : "";
     }
 
     get headline(): string {

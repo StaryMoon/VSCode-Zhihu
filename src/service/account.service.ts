@@ -1,8 +1,7 @@
-
-import { SelfProfileAPI, SignUpRedirectPage } from "../const/URL";
+import { getCookieJar } from "../global/cookie";
+import { SelfProfileAPI } from "../const/URL";
 import { IProfile } from "../model/target/target";
 import { sendRequest } from "./http.service";
-
 
 export class AccountService {
 	public profile: IProfile;
@@ -17,22 +16,36 @@ export class AccountService {
 	}
 
 	async isAuthenticated(): Promise<boolean> {
+		const cookieString = this.getZhihuCookieString();
+		if (!cookieString || !cookieString.includes('z_c0=')) {
+			return false;
+		}
 
-		let checkIfSignedIn;
 		try {
-			checkIfSignedIn = await sendRequest({
-				uri: SignUpRedirectPage,
-				followRedirect: false,
-				followAllRedirects: false,
+			const checkIfSignedIn = await sendRequest({
+				uri: SelfProfileAPI,
+				json: true,
 				resolveWithFullResponse: true,
 				gzip: true,
 				simple: false
 			});
+			if (!checkIfSignedIn || checkIfSignedIn.statusCode != 200) {
+				return false;
+			}
+			const profile = checkIfSignedIn.body;
+			return !!(profile && profile.id && profile.url_token);
 		} catch (err) {
 			console.error('Http error', err);
 			return false;
 		}
-		return Promise.resolve(checkIfSignedIn ? checkIfSignedIn.statusCode == '302' : false);
 	}
 
+	private getZhihuCookieString(): string {
+		try {
+			return getCookieJar().getCookieStringSync('https://www.zhihu.com');
+		} catch (error) {
+			console.error('Cookie error', error);
+			return '';
+		}
+	}
 }

@@ -7,7 +7,7 @@ captcha.jpg
 /tmp_test
 collection.json
 qrcode.png
-image.png 
+image.png
 release_notes/images
 *.vsix
 dist
@@ -17,3 +17,4 @@ cache.json
 **/images
 .vscode-test
 *.log
+.idea/

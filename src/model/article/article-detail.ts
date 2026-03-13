@@ -7,4 +7,8 @@ export interface IArticle extends ITarget {
     title_image: "",
     excerpt: string,
     content: string,
+    voteup_count?: number,
+    comment_count?: number,
+    favlists_count?: number,
+    thanks_count?: number,
 }

@@ -1,5 +1,5 @@
 export interface ITarget {
-	id: number;
+	id: number | string;
 	type: string; // feed_advert should be filtered
 	author: IAuthorTarget;
 	url: string;
@@ -55,6 +55,10 @@ export interface IQuestionAnswerTarget extends ITarget {
 	editable_content?: string;
 	excerpt?: string;
 	relationship?: any;
+	voteup_count?: number;
+	comment_count?: number;
+	thanks_count?: number;
+	favlists_count?: number;
 }
 
 export interface IQuestionTarget extends ITarget {
@@ -84,6 +88,8 @@ export interface IArticleTarget extends ITarget {
 	voteup_count: 4413;
 	voting: 0;
 	comment_count: 201;
+	favlists_count?: number;
+	thanks_count?: number;
 	excerpt: string;
 	excerpt_new: string;
 }

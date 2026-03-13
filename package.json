@@ -2,7 +2,7 @@
 	"name": "vscode-zhihu",
 	"displayName": "Zhihu On VSCode",
 	"description": "Zhihu VSCode Extension",
-	"version": "0.4.0",
+	"version": "0.6.0",
 	"publisher": "niudai",
 	"enableProposedApi": false,
 	"engines": {
@@ -328,13 +328,13 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "webpack --mode production",
-		"develop": "webpack --mode development --watch",
+		"vscode:prepublish": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode production",
+		"develop": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode development --watch",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"test": "npm run compile && node ./out/test/runTest.js",
 		"lint": "eslint -c .eslintrc.js --ext .ts ./src/**/*.ts",
-		"build-mermaid": "webpack --mode=production --config ./build/mermaid.webpack.config.js"
+		"build-mermaid": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --mode=production --config ./build/mermaid.webpack.config.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.15.5",
@@ -351,9 +351,10 @@
 		"@types/request-promise": "^4.1.45",
 		"@types/vscode": "^1.39.0",
 		"@typescript-eslint/eslint-plugin": "^2.23.0",
-		"@typescript-eslint/eslint-plugin-tslint": "^2.23.0",
 		"@typescript-eslint/parser": "^2.23.0",
+		"@vscode/vsce": "^3.7.1",
 		"babel-loader": "^8.2.2",
+		"cross-env": "^7.0.3",
 		"css-loader": "^6.2.0",
 		"eslint": "^6.8.0",
 		"mini-css-extract-plugin": "^2.3.0",
@@ -361,9 +362,7 @@
 		"style-loader": "^3.2.1",
 		"terser-webpack-plugin": "^5.2.4",
 		"ts-loader": "^6.2.1",
-		"tslint": "^6.1.0",
 		"typescript": "^3.7.5",
-		"uglifyjs-webpack-plugin": "^2.2.0",
 		"vscode-test": "^1.3.0",
 		"webpack": "^5.52.0",
 		"webpack-cli": "^4.8.0"
@@ -373,7 +372,7 @@
 		"ali-oss": "^6.5.1",
 		"axios": "^0.24.0",
 		"Base64": "^1.1.0",
-		"cheerio": "^1.0.0-rc.3",
+		"cheerio": "1.0.0-rc.3",
 		"crypto": "^1.0.1",
 		"form-urlencoded": "^4.1.1",
 		"js-base64": "^3.7.2",
@@ -385,6 +384,7 @@
 		"mermaid": "^8.12.1",
 		"on-change": "^1.6.2",
 		"pug": "^2.0.4",
+		"qrcode": "^1.5.4",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.5",
 		"tough-cookie": "^3.0.1",

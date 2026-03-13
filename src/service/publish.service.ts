@@ -108,9 +108,6 @@ export class PublishService {
         const timeObject: TimeObject = { hour: 0, date: new Date(), minute: 0 };
         // get rid of shebang line
         if (url) text = text.slice(text.indexOf("\n") + 1);
-        text =
-            text +
-            "\n\n>本文使用 [Zhihu On VSCode](https://zhuanlan.zhihu.com/p/106057556) 创作并发布";
 
         const isEnable = vscode.workspace
             .getConfiguration("zhihu")

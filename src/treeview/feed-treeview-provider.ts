@@ -71,7 +71,7 @@ export class FeedTreeViewProvider implements vscode.TreeDataProvider<vscode.Tree
 							return new FeedTreeItem(feed.target.question.title, feed.target.type, vscode.TreeItemCollapsibleState.None, {
 								command: 'zhihu.openWebView',
 								title: 'openWebView',
-								arguments: [feed.target.question]
+								arguments: [feed.target]
 							}, feed.target);
 						} else {
 							return new FeedTreeItem('', '', vscode.TreeItemCollapsibleState.None);

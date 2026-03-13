@@ -3,6 +3,11 @@
  */
 export const CaptchaAPI = `https://www.zhihu.com/api/v3/oauth/captcha?lang=en`;
 
+/**
+ * Prefetch captcha context for sign-in / qrcode login
+ */
+export const CaptchaV2API = `https://www.zhihu.com/api/v3/oauth/captcha/v2?type=captcha_sign_in`;
+
 
 /**
  * Prefetch QRCode https://www.zhihu.com/api/v3/account/api/login/qrcode

@@ -4,36 +4,44 @@ const openBtn = document.getElementById('open');
 const upvoteCode = document.getElementById('upvote');
 const vscode = acquireVsCodeApi();
 
+function postCommand(command, payload = {}) {
+	vscode.postMessage(Object.assign({ command }, payload));
+}
+
 function answerUpvote(id) {
-	vscode.postMessage({
-		command: 'upvoteAnswer',
-		id: id
-	})
+	postCommand('upvoteAnswer', { id: id });
 }
 
 function articleUpvote(id) {
-	vscode.postMessage({
-		command: 'upvoteArticle',
-		id: id
-	})
+	postCommand('upvoteArticle', { id: id });
 }
 
-favoriteBtn.addEventListener('click', e => {
-	vscode.postMessage({
-		command: 'collect'
-	})
-	console.log('Favorite Btn Clicked');
-})
-shareBtn.addEventListener('click', e => {
-	vscode.postMessage({
-		command: 'share'
-	})
-})
-openBtn.addEventListener('click', e => {
-	vscode.postMessage({
-		command: 'open'
-	})
-})
+if (favoriteBtn) {
+	favoriteBtn.addEventListener('click', () => {
+		postCommand('collect');
+	});
+}
+
+if (shareBtn) {
+	shareBtn.addEventListener('click', () => {
+		postCommand('share');
+	});
+}
+
+if (openBtn) {
+	openBtn.addEventListener('click', () => {
+		postCommand('open');
+	});
+}
+
+document.querySelectorAll('[data-command]').forEach(button => {
+	button.addEventListener('click', () => {
+		postCommand(button.getAttribute('data-command'), {
+			id: button.getAttribute('data-item-id'),
+			itemType: button.getAttribute('data-item-type')
+		});
+	});
+});
 
 
 
