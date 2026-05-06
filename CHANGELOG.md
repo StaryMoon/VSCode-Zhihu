@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.1]
+
+### Maintained fork
+
+- 基于上游 PR #211 合入新版二维码登录、Cookie 存储、收藏同步和热榜修复。
+- 恢复 `Zhihu: Preview` 命令，并在 Markdown 编辑器右键菜单和标题栏展示预览入口。
+- 新增 `Zhihu: New Draft` 命令，可直接创建知乎文章/回答 Markdown 草稿模板。
+- 将 fork 的扩展标识调整为 `starymoon.vscode-zhihu-starymoon`，便于和原 Marketplace 版本区分。
+
 ## [0.3.0]
 
 ### 文章/答案发布后自动生成头部链接
@@ -164,5 +173,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 

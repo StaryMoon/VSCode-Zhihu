@@ -1,9 +1,9 @@
 {
-	"name": "vscode-zhihu",
-	"displayName": "Zhihu On VSCode",
+	"name": "vscode-zhihu-starymoon",
+	"displayName": "Zhihu On VSCode (Maintained)",
 	"description": "Zhihu VSCode Extension",
-	"version": "0.6.0",
-	"publisher": "niudai",
+	"version": "0.6.1",
+	"publisher": "starymoon",
 	"enableProposedApi": false,
 	"engines": {
 		"vscode": "^1.41.0"
@@ -17,6 +17,8 @@
 		"onCommand:zhihu.refreshCollection",
 		"onCommand:zhihu.openWebView",
 		"onCommand:zhihu.publish",
+		"onCommand:zhihu.preview",
+		"onCommand:zhihu.newDraft",
 		"onCommand:zhihu.jianshuPublish",
 		"onCommand:zhihu.search",
 		"onCommand:zhihu.login",
@@ -38,7 +40,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/niudai/VSCode-Zhihu"
+		"url": "https://github.com/StaryMoon/VSCode-Zhihu"
 	},
 	"icon": "res/media/extension.png",
 	"main": "./dist/extension.js",
@@ -120,6 +122,18 @@
 					"light": "res/media/light/publish.svg",
 					"dark": "res/media/dark/publish.svg"
 				}
+			},
+			{
+				"command": "zhihu.preview",
+				"title": "Zhihu: Preview",
+				"icon": {
+					"light": "res/media/light/preview.svg",
+					"dark": "res/media/dark/preview.svg"
+				}
+			},
+			{
+				"command": "zhihu.newDraft",
+				"title": "Zhihu: New Draft"
 			},
 			{
 				"command": "zhihu.collect",
@@ -215,6 +229,11 @@
 					"group": "zhihu@0"
 				},
 				{
+					"command": "zhihu.preview",
+					"when": "resourceLangId == markdown",
+					"group": "zhihu@1"
+				},
+				{
 					"command": "zhihu.uploadImageFromExplorer",
 					"when": "resourceLangId == markdown",
 					"group": "zhihu@2"
@@ -225,6 +244,11 @@
 					"command": "zhihu.publish",
 					"when": "resourceLangId == markdown",
 					"group": "navigation@0"
+				},
+				{
+					"command": "zhihu.preview",
+					"when": "resourceLangId == markdown",
+					"group": "navigation@1"
 				}
 			],
 			"explorer/context": [

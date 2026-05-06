@@ -1,4 +1,28 @@
-[VS Marketplace](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
+> Maintained fork: this branch is maintained by [StaryMoon](https://github.com/StaryMoon)
+> on top of [niudai/VSCode-Zhihu](https://github.com/niudai/VSCode-Zhihu) and
+> the auth fixes from [PR #211](https://github.com/niudai/VSCode-Zhihu/pull/211).
+> If you install this VSIX, disable or uninstall the original Marketplace
+> extension first because both versions expose the same `zhihu.*` commands.
+
+[Original VS Marketplace](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
+
+## Maintained Build
+
+This fork currently adds:
+
+- fixed login/collection behavior from upstream PR #211;
+- restored `Zhihu: Preview` command in Markdown editor menus;
+- new `Zhihu: New Draft` command for quickly creating article/answer templates.
+
+Build a VSIX locally:
+
+```bash
+npm install
+npm run vscode:prepublish
+npx vsce package
+```
+
+See [MAINTAINING.md](MAINTAINING.md) for the full release checklist.
 
 
 <p align="center">

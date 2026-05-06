@@ -11,6 +11,7 @@ import { AccountService } from "./service/account.service";
 import { AuthenticateService } from "./service/authenticate.service";
 import { CollectionService } from "./service/collection.service";
 import { EventService } from "./service/event.service";
+import { DraftService } from "./service/draft.service";
 import { HttpService, clearCache } from "./service/http.service";
 import { PasteService } from "./service/paste.service";
 import { PipeService } from "./service/pipe.service";
@@ -72,6 +73,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	const feedTreeViewProvider = new FeedTreeViewProvider(accountService, profileService, eventService);
 	const searchService = new SearchService(webviewService);
 	const authenticateService = new AuthenticateService(profileService, accountService, feedTreeViewProvider, webviewService);
+	const draftService = new DraftService();
 	const pasteService = new PasteService();
 	const pipeService = new PipeService(pasteService);
 	const publishService = new PublishService(zhihuMdParser, defualtMdParser, webviewService, collectionService, eventService, profileService, pasteService, pipeService);
@@ -113,9 +115,12 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerTextEditorCommand('zhihu.publish', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
 		publishService.publish(textEditor, edit);
 	})
-	// vscode.commands.registerTextEditorCommand('zhihu.preview', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
-	// 	vscode.commands.executeCommand('markdown.showPreviewToSide');
-	// })
+	vscode.commands.registerTextEditorCommand('zhihu.preview', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
+		publishService.preview(textEditor, edit);
+	})
+	vscode.commands.registerCommand("zhihu.newDraft", () =>
+		draftService.createDraft()
+	);
 	vscode.commands.registerCommand('zhihu.uploadImageFromClipboard', async () => {
 		pasteService.uploadImageFromClipboard()
 	})
