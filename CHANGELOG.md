@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - 基于上游 PR #211 合入新版二维码登录、Cookie 存储、收藏同步和热榜修复。
 - 恢复 `Zhihu: Preview` 命令，并在 Markdown 编辑器右键菜单和标题栏展示预览入口。
+- 新增 `Zhihu: Publish Current Markdown` 命令，并在 Markdown 编辑器右键菜单和标题栏展示发布入口。
 - 新增 `Zhihu: New Draft` 命令，可直接创建知乎文章/回答 Markdown 草稿模板。
-- 将 fork 的扩展标识调整为 `starymoon.vscode-zhihu-starymoon`，便于和原 Marketplace 版本区分。
+- 维护版 VSIX 保持原扩展标识 `niudai.vscode-zhihu`，便于升级已有安装并复用原插件的登录/存储状态。
 
 ## [0.3.0]
 
@@ -173,4 +174,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-

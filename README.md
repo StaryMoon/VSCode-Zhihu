@@ -1,8 +1,9 @@
 > Maintained fork: this branch is maintained by [StaryMoon](https://github.com/StaryMoon)
 > on top of [niudai/VSCode-Zhihu](https://github.com/niudai/VSCode-Zhihu) and
 > the auth fixes from [PR #211](https://github.com/niudai/VSCode-Zhihu/pull/211).
-> If you install this VSIX, disable or uninstall the original Marketplace
-> extension first because both versions expose the same `zhihu.*` commands.
+> The VSIX keeps the original extension ID `niudai.vscode-zhihu`, so it upgrades
+> an existing Zhihu On VSCode installation instead of installing a second
+> conflicting extension.
 
 [Original VS Marketplace](https://marketplace.visualstudio.com/items?itemName=niudai.vscode-zhihu)
 
@@ -12,7 +13,29 @@ This fork currently adds:
 
 - fixed login/collection behavior from upstream PR #211;
 - restored `Zhihu: Preview` command in Markdown editor menus;
+- explicit `Zhihu: Publish Current Markdown` command in Markdown editor menus;
 - new `Zhihu: New Draft` command for quickly creating article/answer templates.
+
+### Markdown to Zhihu publish flow
+
+1. Create or open a `.md` file in VSCode.
+2. Write the article or answer in Markdown. Code blocks, tables, inline HTML,
+   and LaTeX are converted through the extension's Zhihu Markdown pipeline.
+3. Optional but recommended: put a target link on the first line:
+
+```markdown
+#! https://www.zhihu.com/question/19602618
+```
+
+Use a question link to publish a new answer, an answer link to update an existing
+answer, or a `zhuanlan.zhihu.com/p/...` link to update an article.
+
+4. Run `Zhihu: Preview` to preview the converted Zhihu HTML.
+5. Run `Zhihu: Publish Current Markdown` from the editor title button, right
+   click menu, or command palette.
+6. After a successful publish, the extension writes the generated Zhihu link
+   back to the first line of the Markdown file so future runs update the same
+   article or answer.
 
 Build a VSIX locally:
 

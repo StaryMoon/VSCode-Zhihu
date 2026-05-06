@@ -1,9 +1,9 @@
 {
-	"name": "vscode-zhihu-starymoon",
-	"displayName": "Zhihu On VSCode (Maintained)",
+	"name": "vscode-zhihu",
+	"displayName": "Zhihu On VSCode (StaryMoon Maintained)",
 	"description": "Zhihu VSCode Extension",
 	"version": "0.6.1",
-	"publisher": "starymoon",
+	"publisher": "niudai",
 	"enableProposedApi": false,
 	"engines": {
 		"vscode": "^1.41.0"
@@ -17,6 +17,7 @@
 		"onCommand:zhihu.refreshCollection",
 		"onCommand:zhihu.openWebView",
 		"onCommand:zhihu.publish",
+		"onCommand:zhihu.publishCurrentMarkdown",
 		"onCommand:zhihu.preview",
 		"onCommand:zhihu.newDraft",
 		"onCommand:zhihu.jianshuPublish",
@@ -124,6 +125,14 @@
 				}
 			},
 			{
+				"command": "zhihu.publishCurrentMarkdown",
+				"title": "Zhihu: Publish Current Markdown",
+				"icon": {
+					"light": "res/media/light/publish.svg",
+					"dark": "res/media/dark/publish.svg"
+				}
+			},
+			{
 				"command": "zhihu.preview",
 				"title": "Zhihu: Preview",
 				"icon": {
@@ -224,7 +233,7 @@
 		"menus": {
 			"editor/context": [
 				{
-					"command": "zhihu.publish",
+					"command": "zhihu.publishCurrentMarkdown",
 					"when": "resourceLangId == markdown",
 					"group": "zhihu@0"
 				},
@@ -241,7 +250,7 @@
 			],
 			"editor/title": [
 				{
-					"command": "zhihu.publish",
+					"command": "zhihu.publishCurrentMarkdown",
 					"when": "resourceLangId == markdown",
 					"group": "navigation@0"
 				},

@@ -26,13 +26,13 @@ npx vsce package
 The generated file will look like:
 
 ```text
-vscode-zhihu-starymoon-0.6.1.vsix
+vscode-zhihu-0.6.1.vsix
 ```
 
 Install locally:
 
 ```bash
-code --install-extension vscode-zhihu-starymoon-0.6.1.vsix
+code --install-extension vscode-zhihu-0.6.1.vsix
 ```
 
 ## Release Checklist
@@ -43,9 +43,13 @@ code --install-extension vscode-zhihu-starymoon-0.6.1.vsix
 4. Run `npm run vscode:prepublish`.
 5. Run `npx vsce package`.
 6. Install the generated VSIX in VSCode and test login, feed refresh, preview, and publish flow.
+7. Confirm the packaged VSIX contains `res/template/pre-publish.pug` and the
+   `zhihu.publishCurrentMarkdown`, `zhihu.preview`, and `zhihu.newDraft`
+   command contributions.
 
 ## Extension Identity
 
-This maintained fork uses `starymoon.vscode-zhihu-starymoon` as its extension ID.
-If the original `niudai.vscode-zhihu` is installed, disable or uninstall it before
-using this fork because both extensions expose the same `zhihu.*` commands.
+This maintained fork keeps `niudai.vscode-zhihu` as its extension ID so a VSIX
+install upgrades the existing extension instead of installing a second extension
+with conflicting `zhihu.*` commands. The code and release assets are distributed
+from the `StaryMoon/VSCode-Zhihu` fork.

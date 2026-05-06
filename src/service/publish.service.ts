@@ -77,6 +77,10 @@ export class PublishService {
 
     preview(textEdtior: vscode.TextEditor, edit: vscode.TextEditorEdit) {
         let text = textEdtior.document.getText();
+        if (!text.trim()) {
+            vscode.window.showWarningMessage("当前 Markdown 文档为空，无法预览。");
+            return;
+        }
         let url: URL = this.shebangParser(text);
         // get rid of shebang line
         if (url) text = text.slice(text.indexOf("\n") + 1);
@@ -90,6 +94,7 @@ export class PublishService {
             ),
             pugObjects: {
                 title: "答案预览",
+                subTitle: "Zhihu Markdown Preview",
                 content: html,
             },
             showOptions: {
@@ -104,6 +109,10 @@ export class PublishService {
         let titleImage: string;
         let bgIndex: number;
         let text = textEdtior.document.getText();
+        if (!text.trim()) {
+            vscode.window.showWarningMessage("当前 Markdown 文档为空，无法发布。");
+            return;
+        }
         const url: URL = this.shebangParser(text);
         const timeObject: TimeObject = { hour: 0, date: new Date(), minute: 0 };
         // get rid of shebang line
@@ -161,7 +170,7 @@ export class PublishService {
                 { label: "立即发布", description: "", value: false },
                 { label: "稍后发布", description: "", value: true },
             ])
-            .then((item) => item.value);
+            .then((item) => item ? item.value : undefined);
 
         if (pubLater == undefined) return;
 
@@ -286,7 +295,7 @@ export class PublishService {
                         value: MediaTypes.answer,
                     },
                 ])
-                .then((item) => item.value);
+                .then((item) => item ? item.value : undefined);
 
             if (selectFrom === MediaTypes.article) {
                 ({ tokens, html } = this.removeTitleAndBgFromContent(

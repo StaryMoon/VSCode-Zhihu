@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    include css.pug
+    title= title
+  body
+    div(class='header')
+      div(class='description')
+        h1 !{title}
+        if subTitle
+          h2 !{subTitle}
+    div(class='container')
+      div(class='content') !{content}
