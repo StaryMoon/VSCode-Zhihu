@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.2]
+
+### Maintained fork
+
+- 新增 `Zhihu: Publish Markdown as Answer`，Markdown 编辑器右键即可将当前文档发布为知乎回答。
+- 若当前 Markdown 没有首行 `#!` 目标链接，发布回答时会主动询问知乎问题链接并写入文档头部。
+- 新增 `Zhihu: Write Answer for This Question`，支持从推荐、热榜、收藏条目直接生成回答草稿。
+- README 首页增加大字版文章/回答发布教程，方便 VSIX 使用者快速上手。
+
 ## [0.6.1]
 
 ### Maintained fork

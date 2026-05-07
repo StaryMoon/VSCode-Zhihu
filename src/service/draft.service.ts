@@ -1,4 +1,7 @@
 import * as vscode from "vscode";
+import { MediaTypes } from "../const/ENUM";
+import { QuestionURL } from "../const/URL";
+import { extractZhihuIdFromUrl } from "../util/zhihu-id";
 
 export class DraftService {
 	public async createDraft() {
@@ -45,6 +48,50 @@ export class DraftService {
 		});
 	}
 
+	public async createAnswerDraftFromTarget(node?: any) {
+		const target = node && node.target ? node.target : node;
+		let questionId = "";
+		let questionTitle = "";
+		let questionUrl = "";
+
+		if (target) {
+			const question = target.question;
+			if (target.type === MediaTypes.question || target.type === "question_ask") {
+				questionId = extractZhihuIdFromUrl(target.url, MediaTypes.question) || String(target.id || "");
+				questionTitle = target.title || target.excerpt || "";
+			} else if (question) {
+				questionId = extractZhihuIdFromUrl(question.url, MediaTypes.question) || String(question.id || "");
+				questionTitle = question.title || question.excerpt || target.title || "";
+			}
+		}
+
+		if (!questionId) {
+			const pastedUrl = await vscode.window.showInputBox({
+				prompt: "Paste a Zhihu question URL. The draft will publish as an answer.",
+				placeHolder: "https://www.zhihu.com/question/19602618",
+				validateInput: (value) => {
+					if (!value.trim()) return "Please paste a Zhihu question URL.";
+					return extractZhihuIdFromUrl(value, MediaTypes.question)
+						? ""
+						: "Only Zhihu question URLs are supported here.";
+				}
+			});
+			if (!pastedUrl) return;
+			questionId = extractZhihuIdFromUrl(pastedUrl, MediaTypes.question) || "";
+		}
+
+		questionUrl = `${QuestionURL}/${questionId}`;
+		const document = await vscode.workspace.openTextDocument({
+			language: "markdown",
+			content: this.renderAnswerDraft(questionUrl, questionTitle)
+		});
+
+		await vscode.window.showTextDocument(document, {
+			preview: false,
+			viewColumn: vscode.ViewColumn.One
+		});
+	}
+
 	private renderDraft(type: string, title: string, targetUrl: string) {
 		const shebang = targetUrl.trim() ? `#! ${targetUrl.trim()}\n\n` : "";
 		const contextLine = type === "answer"
@@ -77,6 +124,28 @@ ${contextLine}
 ## 小结
 
 把经验收束到 2-3 个要点，方便读者收藏和转发。
+`;
+	}
+
+	private renderAnswerDraft(questionUrl: string, questionTitle: string) {
+		const titleLine = questionTitle
+			? `> Question: ${questionTitle}\n\n`
+			: "";
+
+		return `#! ${questionUrl}
+
+${titleLine}## TL;DR
+
+- 先用一句话给出结论。
+- 再补充一个可验证的理由、例子或经验。
+
+## 正文
+
+这里写你的回答。建议保持结构清楚：先回答问题，再解释依据，最后给出一个读者能带走的观点。
+
+## 小结
+
+把答案收束到 2-3 句话，方便读者快速理解和收藏。
 `;
 	}
 }

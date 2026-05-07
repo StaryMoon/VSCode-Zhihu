@@ -104,6 +104,57 @@ export class PublishService {
         });
     }
 
+    async publishAnswer(textEdtior: vscode.TextEditor, edit: vscode.TextEditorEdit) {
+        const text = textEdtior.document.getText();
+        if (!text.trim()) {
+            vscode.window.showWarningMessage("当前 Markdown 文档为空，无法发布回答。");
+            return;
+        }
+
+        let url: URL | undefined;
+        try {
+            url = this.shebangParser(text);
+        } catch (error) {
+            vscode.window.showWarningMessage("首行 #! 链接无法识别，请使用知乎问题或答案链接。");
+            return;
+        }
+
+        if (url) {
+            if (QuestionPathReg.test(url.pathname) || QuestionAnswerPathReg.test(url.pathname)) {
+                return this.publish(textEdtior, edit);
+            }
+            vscode.window.showWarningMessage("当前 #! 链接不是知乎问题/答案链接，无法按回答发布。");
+            return;
+        }
+
+        const targetUrl = await vscode.window.showInputBox({
+            ignoreFocusOut: true,
+            prompt: "输入知乎问题链接，当前 Markdown 将作为该问题下的新回答发布。",
+            placeHolder: "https://www.zhihu.com/question/19602618",
+            validateInput: (value: string) => {
+                try {
+                    const inputUrl = new URL(value.trim());
+                    if (!/^(\w)+\.zhihu\.com$/.test(inputUrl.host)) {
+                        return "请输入 zhihu.com 的问题链接。";
+                    }
+                    if (!QuestionPathReg.test(inputUrl.pathname) && !QuestionAnswerPathReg.test(inputUrl.pathname)) {
+                        return "请输入知乎问题链接；答案链接仅用于更新已有回答。";
+                    }
+                    return "";
+                } catch (error) {
+                    return "请输入完整链接，例如 https://www.zhihu.com/question/19602618";
+                }
+            },
+        });
+
+        if (!targetUrl) return;
+        const normalizedTargetUrl = targetUrl.trim();
+        await textEdtior.edit((editor) => {
+            editor.insert(new vscode.Position(0, 0), `#! ${normalizedTargetUrl}\n\n`);
+        });
+        return this.publish(textEdtior, edit);
+    }
+
     async publish(textEdtior: vscode.TextEditor, edit: vscode.TextEditorEdit) {
         let title: string;
         let titleImage: string;

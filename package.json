@@ -2,7 +2,7 @@
 	"name": "vscode-zhihu",
 	"displayName": "Zhihu On VSCode (StaryMoon Maintained)",
 	"description": "Zhihu VSCode Extension",
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"publisher": "niudai",
 	"enableProposedApi": false,
 	"engines": {
@@ -18,8 +18,10 @@
 		"onCommand:zhihu.openWebView",
 		"onCommand:zhihu.publish",
 		"onCommand:zhihu.publishCurrentMarkdown",
+		"onCommand:zhihu.publishMarkdownAnswer",
 		"onCommand:zhihu.preview",
 		"onCommand:zhihu.newDraft",
+		"onCommand:zhihu.newAnswerDraft",
 		"onCommand:zhihu.jianshuPublish",
 		"onCommand:zhihu.search",
 		"onCommand:zhihu.login",
@@ -133,6 +135,14 @@
 				}
 			},
 			{
+				"command": "zhihu.publishMarkdownAnswer",
+				"title": "Zhihu: Publish Markdown as Answer",
+				"icon": {
+					"light": "res/media/light/publish.svg",
+					"dark": "res/media/dark/publish.svg"
+				}
+			},
+			{
 				"command": "zhihu.preview",
 				"title": "Zhihu: Preview",
 				"icon": {
@@ -143,6 +153,10 @@
 			{
 				"command": "zhihu.newDraft",
 				"title": "Zhihu: New Draft"
+			},
+			{
+				"command": "zhihu.newAnswerDraft",
+				"title": "Zhihu: Write Answer for This Question"
 			},
 			{
 				"command": "zhihu.collect",
@@ -233,31 +247,41 @@
 		"menus": {
 			"editor/context": [
 				{
-					"command": "zhihu.publishCurrentMarkdown",
+					"command": "zhihu.publishMarkdownAnswer",
 					"when": "resourceLangId == markdown",
 					"group": "zhihu@0"
 				},
 				{
-					"command": "zhihu.preview",
+					"command": "zhihu.publishCurrentMarkdown",
 					"when": "resourceLangId == markdown",
 					"group": "zhihu@1"
 				},
 				{
-					"command": "zhihu.uploadImageFromExplorer",
+					"command": "zhihu.preview",
 					"when": "resourceLangId == markdown",
 					"group": "zhihu@2"
+				},
+				{
+					"command": "zhihu.uploadImageFromExplorer",
+					"when": "resourceLangId == markdown",
+					"group": "zhihu@3"
 				}
 			],
 			"editor/title": [
 				{
-					"command": "zhihu.publishCurrentMarkdown",
+					"command": "zhihu.publishMarkdownAnswer",
 					"when": "resourceLangId == markdown",
 					"group": "navigation@0"
 				},
 				{
-					"command": "zhihu.preview",
+					"command": "zhihu.publishCurrentMarkdown",
 					"when": "resourceLangId == markdown",
 					"group": "navigation@1"
+				},
+				{
+					"command": "zhihu.preview",
+					"when": "resourceLangId == markdown",
+					"group": "navigation@2"
 				}
 			],
 			"explorer/context": [
@@ -309,6 +333,21 @@
 					"command": "zhihu.nextPage",
 					"when": "view == zhihu-feed && viewItem == feed",
 					"group": "inline"
+				},
+				{
+					"command": "zhihu.newAnswerDraft",
+					"when": "view == zhihu-feed && viewItem == dependency",
+					"group": "inline@0"
+				},
+				{
+					"command": "zhihu.newAnswerDraft",
+					"when": "view == zhihu-hotStories && viewItem == dependency",
+					"group": "inline@0"
+				},
+				{
+					"command": "zhihu.newAnswerDraft",
+					"when": "view == zhihu-collection && viewItem == collect-item",
+					"group": "inline@0"
 				},
 				{
 					"command": "zhihu.deleteCollectionItem",

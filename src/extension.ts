@@ -118,11 +118,17 @@ export async function activate(context: vscode.ExtensionContext) {
 	vscode.commands.registerTextEditorCommand('zhihu.publishCurrentMarkdown', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
 		publishService.publish(textEditor, edit);
 	})
+	vscode.commands.registerTextEditorCommand('zhihu.publishMarkdownAnswer', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
+		publishService.publishAnswer(textEditor, edit);
+	})
 	vscode.commands.registerTextEditorCommand('zhihu.preview', (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit) => {
 		publishService.preview(textEditor, edit);
 	})
 	vscode.commands.registerCommand("zhihu.newDraft", () =>
 		draftService.createDraft()
+	);
+	vscode.commands.registerCommand("zhihu.newAnswerDraft", (node) =>
+		draftService.createAnswerDraftFromTarget(node)
 	);
 	vscode.commands.registerCommand('zhihu.uploadImageFromClipboard', async () => {
 		pasteService.uploadImageFromClipboard()

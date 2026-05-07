@@ -1,3 +1,20 @@
+<h1 align="center">Zhihu On VSCode · StaryMoon 维护版</h1>
+
+<h2 align="center">在 VSCode 里写 Markdown，直接发布知乎文章 / 知乎回答</h2>
+
+<p align="center">
+  <strong>0.6.2 重磅更新：</strong>
+  右键 Markdown 可直接发布为知乎回答；在推荐、热榜、收藏的问题上右键可一键创建回答草稿。
+</p>
+
+<p align="center">
+  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.2"><strong>Download VSIX</strong></a>
+  ·
+  <a href="https://github.com/StaryMoon/VSCode-Zhihu"><strong>GitHub Fork</strong></a>
+  ·
+  <a href="https://github.com/niudai/VSCode-Zhihu"><strong>Original Project</strong></a>
+</p>
+
 > Maintained fork: this branch is maintained by [StaryMoon](https://github.com/StaryMoon)
 > on top of [niudai/VSCode-Zhihu](https://github.com/niudai/VSCode-Zhihu) and
 > the auth fixes from [PR #211](https://github.com/niudai/VSCode-Zhihu/pull/211).
@@ -14,14 +31,50 @@ This fork currently adds:
 - fixed login/collection behavior from upstream PR #211;
 - restored `Zhihu: Preview` command in Markdown editor menus;
 - explicit `Zhihu: Publish Current Markdown` command in Markdown editor menus;
-- new `Zhihu: New Draft` command for quickly creating article/answer templates.
+- new `Zhihu: New Draft` command for quickly creating article/answer templates;
+- new `Zhihu: Publish Markdown as Answer` command for posting the current Markdown file as a Zhihu answer;
+- new `Zhihu: Write Answer for This Question` context action on recommended/hot/collected questions.
 
-### Markdown to Zhihu publish flow
+## Quick Tutorial: Publish a Zhihu Article
 
 1. Create or open a `.md` file in VSCode.
-2. Write the article or answer in Markdown. Code blocks, tables, inline HTML,
-   and LaTeX are converted through the extension's Zhihu Markdown pipeline.
-3. Optional but recommended: put a target link on the first line:
+2. Write your article in Markdown. The first `# H1` becomes the article title.
+3. Run `Zhihu: Preview` to preview the converted Zhihu HTML.
+4. Run `Zhihu: Publish Current Markdown` from the editor title button, right
+   click menu, or command palette.
+5. After a successful publish, the extension writes the generated Zhihu article
+   link back to the first line of the Markdown file, so future runs update the
+   same article.
+
+## Quick Tutorial: Publish a Zhihu Answer
+
+### Option A: answer by pasting a question link
+
+1. Create or open a `.md` file in VSCode.
+2. Run `Zhihu: Publish Markdown as Answer` from the editor title button, right
+   click menu, or command palette.
+3. Paste the target question URL, for example:
+
+```markdown
+#! https://www.zhihu.com/question/19602618
+```
+
+4. Choose `立即发布`. The Markdown content will be posted as a new answer.
+5. After a successful publish, the extension replaces the first line with the
+   generated answer link, so running the command again updates the same answer.
+
+### Option B: answer directly from Zhihu recommendations
+
+1. Open the Zhihu sidebar in VSCode and refresh `推荐`, `热榜`, or `收藏`.
+2. Right click a question/answer item.
+3. Click `Zhihu: Write Answer for This Question`.
+4. The extension creates a Markdown answer draft with the target question link
+   already written as the first line.
+5. Write the answer and run `Zhihu: Publish Markdown as Answer`.
+
+### Existing link-scan flow still works
+
+You can still manually put a target link on the first line:
 
 ```markdown
 #! https://www.zhihu.com/question/19602618
@@ -29,13 +82,6 @@ This fork currently adds:
 
 Use a question link to publish a new answer, an answer link to update an existing
 answer, or a `zhuanlan.zhihu.com/p/...` link to update an article.
-
-4. Run `Zhihu: Preview` to preview the converted Zhihu HTML.
-5. Run `Zhihu: Publish Current Markdown` from the editor title button, right
-   click menu, or command palette.
-6. After a successful publish, the extension writes the generated Zhihu link
-   back to the first line of the Markdown file so future runs update the same
-   article or answer.
 
 Build a VSIX locally:
 
