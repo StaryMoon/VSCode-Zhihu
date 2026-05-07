@@ -3,12 +3,12 @@
 <h2 align="center">在 VSCode 里写 Markdown，直接发布知乎文章 / 知乎回答</h2>
 
 <p align="center">
-  <strong>0.6.2 重磅更新：</strong>
-  右键 Markdown 可直接发布为知乎回答；在推荐、热榜、收藏的问题上右键可一键创建回答草稿。
+  <strong>0.6.3 重磅更新：</strong>
+  点击推荐/热榜/收藏继续浏览原回答，右键问题再进入 Markdown 写回答。
 </p>
 
 <p align="center">
-  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.2"><strong>Download VSIX</strong></a>
+  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.3"><strong>Download VSIX</strong></a>
   ·
   <a href="https://github.com/StaryMoon/VSCode-Zhihu"><strong>GitHub Fork</strong></a>
   ·
@@ -33,7 +33,8 @@ This fork currently adds:
 - explicit `Zhihu: Publish Current Markdown` command in Markdown editor menus;
 - new `Zhihu: New Draft` command for quickly creating article/answer templates;
 - new `Zhihu: Publish Markdown as Answer` command for posting the current Markdown file as a Zhihu answer;
-- new `Zhihu: Write Answer for This Question` context action on recommended/hot/collected questions.
+- new `Zhihu: Write Answer for This Question` right-click action on recommended/hot/collected questions;
+- left click on recommended/hot/collected items still opens the original Zhihu reading page.
 
 ## Quick Tutorial: Publish a Zhihu Article
 
@@ -66,11 +67,12 @@ This fork currently adds:
 ### Option B: answer directly from Zhihu recommendations
 
 1. Open the Zhihu sidebar in VSCode and refresh `推荐`, `热榜`, or `收藏`.
-2. Right click a question/answer item.
-3. Click `Zhihu: Write Answer for This Question`.
-4. The extension creates a Markdown answer draft with the target question link
-   already written as the first line.
-5. Write the answer and run `Zhihu: Publish Markdown as Answer`.
+2. Left click an item if you only want to read the question and existing answers.
+3. Right click a question/answer item when you want to write your own answer.
+4. Click `Zhihu: Write Answer for This Question`.
+5. The extension creates a clean Markdown answer draft with only the target
+   question link already written as the first line.
+6. Write the answer and run `Zhihu: Publish Markdown as Answer`.
 
 ### Existing link-scan flow still works
 

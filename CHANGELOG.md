@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.3]
+
+### Maintained fork
+
+- 将 `Zhihu: Write Answer for This Question` 从树条目的行内按钮改为右键菜单动作，点击推荐、热榜、收藏条目会继续打开原知乎阅读页。
+- 从推荐、热榜、收藏创建回答草稿时，只生成首行 `#! https://www.zhihu.com/question/...` 目标链接，不再插入 TL;DR、正文、小结等引导模板。
+- README 首页更新为 0.6.3 教程，明确区分“左键浏览”和“右键写回答”。
+
 ## [0.6.2]
 
 ### Maintained fork

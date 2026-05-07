@@ -2,7 +2,7 @@
 	"name": "vscode-zhihu",
 	"displayName": "Zhihu On VSCode (StaryMoon Maintained)",
 	"description": "Zhihu VSCode Extension",
-	"version": "0.6.2",
+	"version": "0.6.3",
 	"publisher": "niudai",
 	"enableProposedApi": false,
 	"engines": {
@@ -337,17 +337,17 @@
 				{
 					"command": "zhihu.newAnswerDraft",
 					"when": "view == zhihu-feed && viewItem == dependency",
-					"group": "inline@0"
+					"group": "zhihu@0"
 				},
 				{
 					"command": "zhihu.newAnswerDraft",
 					"when": "view == zhihu-hotStories && viewItem == dependency",
-					"group": "inline@0"
+					"group": "zhihu@0"
 				},
 				{
 					"command": "zhihu.newAnswerDraft",
 					"when": "view == zhihu-collection && viewItem == collect-item",
-					"group": "inline@0"
+					"group": "zhihu@0"
 				},
 				{
 					"command": "zhihu.deleteCollectionItem",
