@@ -2,7 +2,7 @@
 	"name": "vscode-zhihu",
 	"displayName": "Zhihu On VSCode (StaryMoon Maintained)",
 	"description": "Zhihu VSCode Extension",
-	"version": "0.6.3",
+	"version": "0.6.4",
 	"publisher": "niudai",
 	"enableProposedApi": false,
 	"engines": {
@@ -19,6 +19,8 @@
 		"onCommand:zhihu.publish",
 		"onCommand:zhihu.publishCurrentMarkdown",
 		"onCommand:zhihu.publishMarkdownAnswer",
+		"onCommand:zhihu.exportQuestionForCodex",
+		"onCommand:zhihu.searchQuestionForCodex",
 		"onCommand:zhihu.preview",
 		"onCommand:zhihu.newDraft",
 		"onCommand:zhihu.newAnswerDraft",
@@ -141,6 +143,14 @@
 					"light": "res/media/light/publish.svg",
 					"dark": "res/media/dark/publish.svg"
 				}
+			},
+			{
+				"command": "zhihu.exportQuestionForCodex",
+				"title": "Zhihu: Export Question for Codex"
+			},
+			{
+				"command": "zhihu.searchQuestionForCodex",
+				"title": "Zhihu: Search Question for Codex"
 			},
 			{
 				"command": "zhihu.preview",

@@ -3,12 +3,12 @@
 <h2 align="center">在 VSCode 里写 Markdown，直接发布知乎文章 / 知乎回答</h2>
 
 <p align="center">
-  <strong>0.6.3 重磅更新：</strong>
-  点击推荐/热榜/收藏继续浏览原回答，右键问题再进入 Markdown 写回答。
+  <strong>0.6.4 重磅更新：</strong>
+  可将知乎问题和回答一键导出为 Markdown，方便 Codex 深度阅读和拆解。
 </p>
 
 <p align="center">
-  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.3"><strong>Download VSIX</strong></a>
+  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.4"><strong>Download VSIX</strong></a>
   ·
   <a href="https://github.com/StaryMoon/VSCode-Zhihu"><strong>GitHub Fork</strong></a>
   ·
@@ -34,7 +34,28 @@ This fork currently adds:
 - new `Zhihu: New Draft` command for quickly creating article/answer templates;
 - new `Zhihu: Publish Markdown as Answer` command for posting the current Markdown file as a Zhihu answer;
 - new `Zhihu: Write Answer for This Question` right-click action on recommended/hot/collected questions;
+- new `Zhihu: Export Question for Codex` command for exporting a question and its answers to `Downloads/zhihu-drafts`;
+- new `Zhihu: Search Question for Codex` command for searching Zhihu questions, selecting one, and exporting it with answers;
 - left click on recommended/hot/collected items still opens the original Zhihu reading page.
+
+## Quick Tutorial: Export a Question for Codex
+
+1. Run `Zhihu: Export Question for Codex` from the command palette.
+2. Paste a Zhihu question link, for example:
+
+```text
+https://www.zhihu.com/question/15442729471
+```
+
+3. Choose how many answers to export. Enter `all` if you really want every
+   answer; for Codex analysis, `20` is usually a better first pass.
+4. The extension writes a Markdown file like
+   `~/Downloads/zhihu-drafts/zhihu-question-15442729471.md`.
+5. Give that local file to Codex for explanation, answer-style study, or draft
+   writing.
+
+You can also run `Zhihu: Search Question for Codex`, enter a keyword, select a
+question from the Zhihu search results, and export it directly.
 
 ## Quick Tutorial: Publish a Zhihu Article
 

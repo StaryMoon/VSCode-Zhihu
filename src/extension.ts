@@ -10,6 +10,7 @@ import * as vscode from "vscode";
 import { AccountService } from "./service/account.service";
 import { AuthenticateService } from "./service/authenticate.service";
 import { CollectionService } from "./service/collection.service";
+import { CodexExportService } from "./service/codex-export.service";
 import { EventService } from "./service/event.service";
 import { DraftService } from "./service/draft.service";
 import { HttpService, clearCache } from "./service/http.service";
@@ -28,6 +29,8 @@ import { Output } from "./global/logger";
 import * as CacheManager from "./global/cache"
 import { ZhihuCompletionProvider, AtPeople } from "./lang/completion-provider";
 import { mermaiSupport } from "./util/mermai-support";
+import { SearchTypes } from "./const/ENUM";
+import { removeHtmlTag } from "./util/md-html-utils";
 
 export async function activate(context: vscode.ExtensionContext) {
 	Output('Extension Activated')
@@ -72,6 +75,7 @@ export async function activate(context: vscode.ExtensionContext) {
 	const eventService = new EventService();
 	const feedTreeViewProvider = new FeedTreeViewProvider(accountService, profileService, eventService);
 	const searchService = new SearchService(webviewService);
+	const codexExportService = new CodexExportService();
 	const authenticateService = new AuthenticateService(profileService, accountService, feedTreeViewProvider, webviewService);
 	const draftService = new DraftService();
 	const pasteService = new PasteService();
@@ -91,6 +95,39 @@ export async function activate(context: vscode.ExtensionContext) {
 		clearCache()
 		CacheManager.clearCache()
 	})
+	vscode.commands.registerCommand("zhihu.exportQuestionForCodex", () =>
+		codexExportService.exportQuestionForCodex()
+	);
+	vscode.commands.registerCommand("zhihu.searchQuestionForCodex", async () => {
+		const keywordString: string | undefined = await vscode.window.showInputBox({
+			ignoreFocusOut: true,
+			prompt: "输入关键词，搜索知乎问题并导出给 Codex",
+			placeHolder: "AI 编程 / 小红书 推荐机制 / 国乙"
+		});
+		if (!keywordString) return;
+		const searchResults = await searchService.getSearchResults(keywordString, SearchTypes.question);
+		if (!searchResults.length) {
+			const questionInput = await vscode.window.showInputBox({
+				ignoreFocusOut: true,
+				prompt: "知乎搜索接口被风控限制了。你可以粘贴一个知乎问题链接继续导出。",
+				placeHolder: "https://www.zhihu.com/question/15442729471"
+			});
+			if (questionInput) {
+				await codexExportService.exportQuestionForCodex(questionInput);
+			}
+			return;
+		}
+		const selectedItem = await vscode.window.showQuickPick(
+			searchResults.map(item => ({
+				label: removeHtmlTag(item.highlight && item.highlight.title ? item.highlight.title : item.object && item.object.title ? item.object.title : ""),
+				description: removeHtmlTag(item.highlight && item.highlight.description ? item.highlight.description : item.object && item.object.excerpt ? item.object.excerpt : ""),
+				value: item
+			})),
+			{ ignoreFocusOut: true, placeHolder: "选择要导出的问题" }
+		).then(vscodeItem => vscodeItem ? vscodeItem.value : undefined);
+		if (!selectedItem || !selectedItem.object) return;
+		await codexExportService.exportQuestionBySearchTarget(selectedItem.object);
+	});
 	vscode.commands.registerCommand("zhihu.login", () =>
 		authenticateService.login()
 	);

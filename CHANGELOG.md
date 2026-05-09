@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.4]
+
+### Maintained fork
+
+- 新增 `Zhihu: Export Question for Codex`，可粘贴知乎问题链接，将问题详情和回答正文导出到 `~/Downloads/zhihu-drafts/zhihu-question-<id>.md`。
+- 新增 `Zhihu: Search Question for Codex`，可输入关键词搜索知乎问题，选择结果后直接导出问题和回答。
+- 导出命令复用插件已有知乎登录态，不导出 cookie，只保存问题、回答、作者、赞同数、评论数和正文内容，便于后续交给 Codex 分析。
+
 ## [0.6.3]
 
 ### Maintained fork
