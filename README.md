@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/StaryMoon/VSCode-Zhihu/raw/master/vscode-zhihu-starymoon-0.6.4.vsix"><strong>Download VSIX</strong></a>
+  <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/download/v0.6.4/vscode-zhihu-starymoon-0.6.4.vsix"><strong>Download VSIX</strong></a>
   ·
   <a href="https://github.com/StaryMoon/VSCode-Zhihu/releases/tag/v0.6.4"><strong>Release Tag</strong></a>
   ·
