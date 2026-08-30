@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Maintained fork
 
+- 修复收藏夹中文章条目无法加载（`Collection target fetch failed: type=article`）：知乎已对 `www.zhihu.com/api/v4/articles` 接口开启风控（403 code 10003），文章阅读页与收藏树改用实测可用的 `zhuanlan.zhihu.com/api/articles/<id>` 端点，标题/正文/赞同数/评论数/收藏数字段齐全，已用真实账号验证 46/46 篇文章恢复加载。
 - 新增 `Zhihu: Edit Article`：文章阅读 Webview 顶部“编辑文章”按钮、推荐/热榜/收藏文章条目右键菜单、命令面板粘贴文章链接或文章 ID 三个入口，把已有知乎文章拉成可编辑的 Markdown 草稿（首行 `#!` 携带原文章 URL，封面图在首个 H1 之前）。
 - 首行是文章链接时执行 `Zhihu: Publish Current Markdown` 会更新原文章：发布前重新读取原文章，默认保持原专栏和评论权限；删除 H1 前封面图会显式清空封面；文章 URL 和 ID 保持不变。
 - 文章更新严格执行 PATCH 草稿 → PUT 发布：PATCH 非 2xx 或无响应时绝不触发发布，并对 401/403/404、网络失败给出可理解的提示，本地内容保留可重试。

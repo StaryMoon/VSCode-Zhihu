@@ -3,7 +3,7 @@ import * as httpClient from "request-promise";
 import { CollectionPath } from "../const/PATH";
 import { MediaTypes } from "../const/ENUM";
 import { sendRequest } from "./http.service";
-import { AnswerAPI, ArticleAPI, QuestionAPI, SelfProfileAPI } from "../const/URL";
+import { AnswerAPI, QuestionAPI, SelfProfileAPI, ZhuanlanAPI } from "../const/URL";
 import { ITarget } from "../model/target/target";
 import { getStorageFilePath } from "../global/globa-var";
 import { Output } from "../global/logger";
@@ -104,8 +104,10 @@ export class CollectionService {
 					gzip: true
 				});
 			} else if (item.type == MediaTypes.article) {
+				// `www.zhihu.com/api/v4/articles` is risk-controlled (403 code 10003);
+				// the zhuanlan endpoint returns the same browse fields — live verified.
 				target = await sendRequest({
-					uri: `${ArticleAPI}/${item.id}`,
+					uri: `${ZhuanlanAPI}/${item.id}`,
 					json: true,
 					gzip: true
 				});
