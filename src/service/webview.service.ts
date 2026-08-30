@@ -3,7 +3,7 @@ import { compileFile } from "pug";
 import * as vscode from "vscode";
 import { MediaTypes, SettingEnum, WebviewEvents } from "../const/ENUM";
 import { TemplatePath, ZhihuIconPath } from "../const/PATH";
-import { AnswerAPI, AnswerURL, QuestionAPI, QuestionURL, ZhuanlanURL, ArticleAPI } from "../const/URL";
+import { AnswerAPI, AnswerURL, ArticleAPI, QuestionAPI, QuestionURL, ZhuanlanAPI, ZhuanlanURL } from "../const/URL";
 import { IArticle } from "../model/article/article-detail";
 import { IQuestionAnswerTarget, IQuestionTarget, ITarget } from "../model/target/target";
 import { CollectionTreeviewProvider } from "../treeview/collection-treeview-provider";
@@ -116,8 +116,11 @@ export class WebviewService {
 			this.registerEvent(panel, { type: MediaTypes.answer, id: answerId }, `${AnswerURL}/${answerId}`);
 		} else if (object.type == MediaTypes.article) {
 			const articleId = resolveTargetId(object);
+			// The public v4 article endpoint is risk-controlled (403 code 10003);
+			// zhuanlan's own API returns content, author and vote/comment/favlists
+			// counts for both own and others' articles — live verified.
 			const article: IArticle = await sendRequest({
-				uri: `${ArticleAPI}/${articleId}?include=voteup_count,comment_count,favlists_count,thanks_count`,
+				uri: `${ZhuanlanAPI}/${articleId}`,
 				json: true,
 				gzip: true,
 				headers: null
@@ -168,6 +171,13 @@ export class WebviewService {
 						vscode.window.showInformationMessage("链接已复制至剪贴板。");
 					});
 				}
+			} else if (event.command == WebviewEvents.editArticle) {
+				const articleId = event.id ? event.id.toString() : defaultCollectionItem.id;
+				vscode.commands.executeCommand("zhihu.editArticle", {
+					type: MediaTypes.article,
+					id: articleId,
+					url: `${ZhuanlanURL}${articleId}`
+				});
 			} else if (event.command == WebviewEvents.upvoteAnswer) {
 				sendRequest({
 					uri: `${AnswerAPI}/${event.id}/voters`,

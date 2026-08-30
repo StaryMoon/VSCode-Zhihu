@@ -19,6 +19,59 @@ const GenericPatterns = [
     /\/p\/(\d+)/i,
 ];
 
+/**
+ * Host whose article pages live at `https://zhuanlan.zhihu.com/p/<id>`.
+ */
+const ZhuanlanHost = "zhuanlan.zhihu.com";
+
+/**
+ * Strictly extract a zhihu article id from user input. Accepts a pure numeric
+ * article id or an article page url (trailing slash, query and hash are
+ * tolerated). Never accepts question/answer urls, so an article link can not
+ * be mistaken for other content types.
+ */
+export function extractArticleId(input?: string): string | undefined {
+    if (!input) {
+        return undefined;
+    }
+    const trimmed = input.trim();
+    if (/^\d+$/.test(trimmed)) {
+        return trimmed;
+    }
+    let parsed: URL;
+    try {
+        parsed = new URL(trimmed);
+    } catch (error) {
+        return undefined;
+    }
+    if (parsed.hostname.toLowerCase() !== ZhuanlanHost) {
+        return undefined;
+    }
+    const matched = /^\/p\/(\d+)\/?$/i.exec(parsed.pathname);
+    return matched && matched[1] ? matched[1] : undefined;
+}
+
+/**
+ * Resolve the article id from a tree node target, webview payload or simple
+ * `{ id, url }` object. Only strict article ids are returned: a target that
+ * carries a non-article url or type never falls back to its raw `id`.
+ */
+export function resolveArticleIdFromTarget(target?: PartialTarget): string {
+    if (!target) {
+        return "";
+    }
+    if (target.type && target.type !== "article") {
+        return "";
+    }
+    if (target.url) {
+        return extractArticleId(target.url) || "";
+    }
+    if (target.id !== undefined && target.id !== null && /^\d+$/.test(String(target.id))) {
+        return String(target.id);
+    }
+    return "";
+}
+
 export function extractZhihuIdFromUrl(url?: string, type?: string): string | undefined {
     if (!url) {
         return undefined;

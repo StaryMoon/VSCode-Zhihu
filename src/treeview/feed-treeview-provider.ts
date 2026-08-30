@@ -137,7 +137,7 @@ export class FeedTreeItem extends LinkableTreeItem {
 
 	iconPath = this.avatarUrl ? vscode.Uri.parse(this.avatarUrl) : false;
 
-	contextValue = (this.type == 'feed') ? 'feed' : 'dependency';
+	contextValue = (this.type == 'feed') ? 'feed' : (this.type == MediaTypes.article ? 'article' : 'dependency');
 
 }
 

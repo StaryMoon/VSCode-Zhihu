@@ -157,7 +157,7 @@ export class HotStoryTreeViewProvider
                             .map((story) => {
                                 return new ZhihuTreeItem(
                                     story.target.title ? story.target.title : "",
-                                    "",
+                                    story.target.type ? story.target.type : "",
                                     vscode.TreeItemCollapsibleState.None,
                                     {
                                         command: "zhihu.openWebView",
@@ -350,5 +350,5 @@ export class ZhihuTreeItem extends LinkableTreeItem {
         return this.target && this.target.excerpt ? this.target.excerpt : "";
     }
 
-    contextValue = this.type == "feed" ? "feed" : "dependency";
+    contextValue = this.type == "feed" ? "feed" : this.type === "article" ? "article" : "dependency";
 }

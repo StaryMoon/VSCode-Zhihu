@@ -8,6 +8,7 @@ import { CookieJar } from "tough-cookie";
 import * as FileCookieStore from "tough-cookie-filestore";
 import * as vscode from "vscode";
 import { AccountService } from "./service/account.service";
+import { ArticleEditService } from "./service/article-edit.service";
 import { AuthenticateService } from "./service/authenticate.service";
 import { CollectionService } from "./service/collection.service";
 import { CodexExportService } from "./service/codex-export.service";
@@ -81,11 +82,21 @@ export async function activate(context: vscode.ExtensionContext) {
 	const pasteService = new PasteService();
 	const pipeService = new PipeService(pasteService);
 	const publishService = new PublishService(zhihuMdParser, defualtMdParser, webviewService, collectionService, eventService, profileService, pasteService, pipeService);
+	const articleEditService = new ArticleEditService(profileService);
 
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand("zhihu.openWebView", async (object) => {
 			await webviewService.openWebview(object);
+		}
+		));
+	context.subscriptions.push(
+		vscode.commands.registerCommand("zhihu.editArticle", async (node?: unknown) => {
+			// Accept tree node targets, webview payloads and command palette input
+			// through one unpacking point.
+			const raw = node as any;
+			const target = raw && raw.target ? raw.target : raw;
+			await articleEditService.editArticle(target || undefined);
 		}
 		));
 	vscode.commands.registerCommand("zhihu.search", async () =>

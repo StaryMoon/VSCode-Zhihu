@@ -91,6 +91,6 @@ export class CollectionItem extends LinkableTreeItem {
 	// 	dark: vscode.ThemeIcon.File
 	// };
 
-	contextValue =  this.collapsibleState == vscode.TreeItemCollapsibleState.None ? 'collect-item' : this.type;
+	contextValue =  this.collapsibleState == vscode.TreeItemCollapsibleState.None ? (this.type == MediaTypes.article ? 'collect-article' : 'collect-item') : this.type;
 
 }
