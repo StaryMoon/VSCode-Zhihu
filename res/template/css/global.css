@@ -66,6 +66,21 @@ p {
     padding: 14px 0 4px;
 }
 
+.article-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 12px;
+}
+
+.article-edit-btn {
+    color: #056de8;
+    font-size: 14px;
+}
+
+.article-edit-btn:hover {
+    color: #0b5fd0;
+}
+
 .action-item,
 .action-btn {
     color: #8590a6;

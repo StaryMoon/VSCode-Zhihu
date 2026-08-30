@@ -108,6 +108,44 @@ You can still manually put a target link on the first line:
 Use a question link to publish a new answer, an answer link to update an existing
 answer, or a `zhuanlan.zhihu.com/p/...` link to update an article.
 
+## Quick Tutorial: Edit an Existing Zhihu Article
+
+You no longer need to hand-write the `#!` line or look up article ids:
+
+1. Open an article from `推荐`, `热榜`, `收藏`, or search results, then click
+   `✎ 编辑文章` at the top of the reading webview. Or right click any article
+   item in the side bars and choose `Zhihu: Edit Article`. Or run
+   `Zhihu: Edit Article` from the command palette and paste an article link
+   (or a pure numeric article id).
+2. The extension fetches the article and opens a new untitled Markdown editor
+   in the shape of:
+
+```markdown
+#! https://zhuanlan.zhihu.com/p/123456
+
+![文章封面](https://pic4.zhimg.com/80/example.png)
+
+# 原文章标题
+
+这里是转换后的正文。
+```
+
+3. Edit the Markdown, then run `Zhihu: Publish Current Markdown`. Because the
+   first line is the article link, the extension updates the original article
+   in place — the article url and id stay the same.
+
+Notes:
+
+- Updating keeps the original column and comment permission by default; the
+  column only changes when you explicitly pick another one.
+- The image before the first `# H1` is the article cover. Deleting it
+  explicitly clears the cover on Zhihu.
+- Only your own articles can be updated; Zhihu rejects others with a clear
+  permission error. If saving the draft fails, publishing is never triggered
+  and your local Markdown stays ready for a retry.
+- Scheduled article updates survive a VS Code restart: they re-run as
+  updates of the same article, never as new-article posts.
+
 Build a VSIX locally:
 
 ```bash
@@ -139,6 +177,7 @@ See [MAINTAINING.md](MAINTAINING.md) for the full release checklist.
 - 创作
   - [内容创作](#🖍-内容创作)
   - [内容发布](#📩-内容发布)
+  - [修改文章](#✏️-修改文章)
   - [一键上传图片](#📊-上传图片)
   - [定时发布](#🕐-定时发布)
 - 浏览
@@ -303,6 +342,8 @@ $$
 #! https://zhuanlan.zhihu.com/p/107810342
 ```
 
+放置于第一行，即可在原文章上执行更新，文章 URL 和 ID 保持不变；也可以直接通过[修改文章](#✏️-修改文章)让插件自动生成这一行。
+
 若插件没有在首行扫描到链接，则会询问创作者接下来的操作，你可以选择发布新文章，或从收藏夹中选取相应问题，发布至相应问题下：
 
 <p align="center">
@@ -348,6 +389,26 @@ $$
 <img src="https://raw.githubusercontent.com/niudai/ImageHost/master/zhihu/2020-02-08-20-51-43.png" style="box-shadow: 2px 2px 8px 0px #5dd8fd;border-radius: 6px;"/></p>
 
 选择后，答案就会发布至相应的答案下（若已在该答案下发布过问题，请用顶部链接的方式来发布！)。
+
+---
+
+## ✏️ 修改文章
+
+不想手写 `#!` 链接也没关系，插件支持把已有知乎文章直接拉下来编辑：
+
+- 文章阅读页顶部点击 `✎ 编辑文章`；
+- 推荐、热榜、收藏树中的文章条目右键 `Zhihu: Edit Article`（问题和回答条目不会出现该菜单）；
+- 命令面板执行 `Zhihu: Edit Article`，粘贴文章链接（支持尾部斜杠）或纯数字文章 ID。
+
+插件会读取文章的标题、封面与正文，转换后打开一个新的 Markdown 草稿（不会覆盖本地文件）：首行是 `#! https://zhuanlan.zhihu.com/p/<id>`，封面图位于第一个 H1 之前，H1 即文章标题。修改后执行 `Zhihu: Publish Current Markdown` 即更新原文章。
+
+更新行为约定：
+
+- 发布前会重新读取原文章，默认“保持原专栏”并保留原评论权限，只有明确选择才会改变归属；
+- 删除 H1 前的封面图即清空封面；
+- 先 PATCH 草稿、确认成功后才 PUT 发布；草稿保存失败绝不触发发布，本地内容保留可重试；
+- 只能修改自己的文章，非作者会得到明确的权限提示；
+- 定时任务持久化了操作类型，重启后文章更新仍作用于原文章，不会误发新文章。
 
 ---
 

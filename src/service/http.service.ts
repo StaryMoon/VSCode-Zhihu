@@ -39,6 +39,20 @@ export class HttpService {
         }
         if (this.xsrfToken) {
             options.headers["x-xsrftoken"] = this.xsrfToken;
+        } else {
+            // Cookies restored from disk (restart) never ran the login flow, so
+            // pick up `_xsrf` from the jar lazily: write requests (PATCH draft,
+            // PUT publish) are rejected with 403 without it.
+            try {
+                const jarString = getCookieJar().getCookieStringSync(options.uri);
+                const matched = /(?:^|;\s*)_xsrf=([^;]+)/.exec(jarString);
+                if (matched) {
+                    this.xsrfToken = matched[1];
+                    options.headers["x-xsrftoken"] = this.xsrfToken;
+                }
+            } catch (error) {
+                console.log(error);
+            }
         }
         try {
             options.headers["cookie"] = options.useRawCookieHeader

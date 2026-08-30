@@ -168,6 +168,13 @@ export class WebviewService {
 						vscode.window.showInformationMessage("链接已复制至剪贴板。");
 					});
 				}
+			} else if (event.command == WebviewEvents.editArticle) {
+				const articleId = event.id ? event.id.toString() : defaultCollectionItem.id;
+				vscode.commands.executeCommand("zhihu.editArticle", {
+					type: MediaTypes.article,
+					id: articleId,
+					url: `${ZhuanlanURL}${articleId}`
+				});
 			} else if (event.command == WebviewEvents.upvoteAnswer) {
 				sendRequest({
 					uri: `${AnswerAPI}/${event.id}/voters`,

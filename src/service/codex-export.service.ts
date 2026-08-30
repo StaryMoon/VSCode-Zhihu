@@ -1,10 +1,10 @@
-import * as cheerio from "cheerio";
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import * as vscode from "vscode";
 import { QuestionAPI, QuestionURL } from "../const/URL";
 import { IQuestionAnswerTarget, IQuestionTarget, ISearchTarget } from "../model/target/target";
+import { htmlToMarkdown as convertHtmlToMarkdown } from "../util/html-to-markdown";
 import { removeHtmlTag, removeSpace } from "../util/md-html-utils";
 import { extractZhihuIdFromUrl, resolveTargetId } from "../util/zhihu-id";
 import { sendRequest } from "./http.service";
@@ -219,41 +219,7 @@ export class CodexExportService {
 	}
 
 	private htmlToMarkdown(html: string): string {
-		if (!html) return "";
-		const $ = cheerio.load(`<article>${html}</article>`, { decodeEntities: true });
-		$("br").replaceWith("\n");
-		$("img").each((_, img) => {
-			const $img = $(img);
-			const src = $img.attr("data-original") || $img.attr("data-actualsrc") || $img.attr("src");
-			$img.replaceWith(src ? `\n![](${src})\n` : "");
-		});
-		$("a").each((_, link) => {
-			const $link = $(link);
-			const text = $link.text();
-			const href = $link.attr("href");
-			$link.replaceWith(href && href !== text ? `${text} (${href})` : text);
-		});
-		$("pre").each((_, pre) => {
-			const code = $(pre).text();
-			$(pre).replaceWith(`\n\n\`\`\`\n${code.trim()}\n\`\`\`\n\n`);
-		});
-		$("code").each((_, code) => {
-			const $code = $(code);
-			$code.replaceWith(`\`${$code.text()}\``);
-		});
-		$("li").each((_, li) => {
-			const $li = $(li);
-			$li.prepend("- ");
-			$li.append("\n");
-		});
-		$("p, div, h1, h2, h3, h4, blockquote, figure").each((_, block) => {
-			$(block).append("\n\n");
-		});
-		return $("article").text()
-			.replace(/\u00a0/g, " ")
-			.replace(/[ \t]+\n/g, "\n")
-			.replace(/\n{3,}/g, "\n\n")
-			.trim();
+		return convertHtmlToMarkdown(html || "");
 	}
 
 	private escapeMarkdown(text: string): string {

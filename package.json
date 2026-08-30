@@ -16,6 +16,7 @@
 		"onCommand:zhihu.refreshHotstories",
 		"onCommand:zhihu.refreshCollection",
 		"onCommand:zhihu.openWebView",
+		"onCommand:zhihu.editArticle",
 		"onCommand:zhihu.publish",
 		"onCommand:zhihu.publishCurrentMarkdown",
 		"onCommand:zhihu.publishMarkdownAnswer",
@@ -107,6 +108,14 @@
 			{
 				"command": "zhihu.openWebView",
 				"title": "Zhihu: openWebView"
+			},
+			{
+				"command": "zhihu.editArticle",
+				"title": "Zhihu: Edit Article",
+				"icon": {
+					"light": "res/media/light/edit.svg",
+					"dark": "res/media/dark/edit.svg"
+				}
 			},
 			{
 				"command": "zhihu.clearCache",
@@ -355,6 +364,21 @@
 					"group": "zhihu@0"
 				},
 				{
+					"command": "zhihu.editArticle",
+					"when": "view == zhihu-feed && viewItem == article",
+					"group": "zhihu@0"
+				},
+				{
+					"command": "zhihu.editArticle",
+					"when": "view == zhihu-hotStories && viewItem == article",
+					"group": "zhihu@0"
+				},
+				{
+					"command": "zhihu.editArticle",
+					"when": "view == zhihu-collection && viewItem == collect-article",
+					"group": "zhihu@0"
+				},
+				{
 					"command": "zhihu.newAnswerDraft",
 					"when": "view == zhihu-collection && viewItem == collect-item",
 					"group": "zhihu@0"
@@ -362,6 +386,11 @@
 				{
 					"command": "zhihu.deleteCollectionItem",
 					"when": "view == zhihu-collection && viewItem == collect-item",
+					"group": "inline"
+				},
+				{
+					"command": "zhihu.deleteCollectionItem",
+					"when": "view == zhihu-collection && viewItem == collect-article",
 					"group": "inline"
 				},
 				{

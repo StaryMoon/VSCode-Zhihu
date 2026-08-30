@@ -7,6 +7,8 @@ html
     div(class='header')
       include header.pug
     div(class='container')
+      div(class='article-toolbar')
+        button(class='action-btn article-edit-btn', type='button', data-command='editArticle', data-item-id=`${article.id}`, data-item-type='article', title='在 Markdown 编辑器中修改这篇文章') ✎ 编辑文章
       div(class='author')
         span(class='avatar-span')
           a(href=`https://www.zhihu.com/people/${article.author.url_token}`)
